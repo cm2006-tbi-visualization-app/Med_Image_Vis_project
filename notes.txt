@@ -1,0 +1,12 @@
+As input for visualizing we have a matrix,
+which includes values per node/mesh/voxel in MRI and the
+ index(location of node)
+
+ it would be n*2 shape or n*2*t (for animation).
+ The n represents the number of node/mesh/voxel,
+ 2 includes the index and strain value.
+
+
+
+We have T1 mri images of entire head, we use HD-BET (High-Definition Brain Extraction Tool)
+to remove everything from MRI head scan that is not brain, works well!

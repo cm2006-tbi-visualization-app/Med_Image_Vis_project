@@ -1,0 +1,16 @@
+#visualization
+vtk
+PyQt5
+pyvista
+pyvistaqt
+
+#for gui of app
+pyqt5-tools
+pyqt5-sip
+
+# Core library for HD-BET
+git+https://github.com/MIC-DKFZ/HD-BET
+# Required for handling NIfTI files (.nii)
+nibabel
+numpy
+torch
