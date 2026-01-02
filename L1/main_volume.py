@@ -3,11 +3,11 @@ import sys
 
 
 # 1 get data path from the first argument given
-data_path = sys.argv[1]
+brain_data_path = sys.argv[1]
 
 # 2 set up the source
 reader_source = vtk.vtkNIFTIImageReader()#produces a vtkImageData - 3D voxel grid w scalar values
-reader_source.SetFileName(data_path)
+reader_source.SetFileName(brain_data_path)
 
 # 3 set up the volume mapper
 volume_mapper = vtk.vtkGPUVolumeRayCastMapper()# vtkImageData converted into ?
@@ -16,19 +16,32 @@ volume_mapper.SetInputConnection(reader_source.GetOutputPort())
 # 4 create a transfer function for color 
 #   for now: map value 0   -> black: (0., 0., 0.) 
 #                      512 -> black: (1., 1., 1.)
+import nibabel as nib
+import numpy as np
+
+img = nib.load(brain_data_path)
+data = img.get_fdata()
+print("Min:", np.min(data), "Max:", np.max(data))
+
 color_trans_fun = vtk.vtkColorTransferFunction()
 color_trans_fun.SetColorSpaceToRGB()
-color_trans_fun.AddRGBPoint(0,0,0,0)
-#color_trans_fun.AddRGBPoint(127,0,1,0)
-color_trans_fun.AddRGBPoint(512,1.0,1.0,1.0)
+color_trans_fun.AddRGBPoint(0, 0, 0, 0)         # background: black
+color_trans_fun.AddRGBPoint(500, 0.8, 0.4, 0.3) # gray matter
+color_trans_fun.AddRGBPoint(1500, 1.0, 0.8, 0.6) # white matter
+color_trans_fun.AddRGBPoint(3000, 0.9, 0.9, 0.7) # brightest areas
 
 
 # 5 create a scalar transfer function for opacity
 #   for now: map value 0   -> 0. 
 #                      256 -> .01
 opacity_trans_fun = vtk.vtkPiecewiseFunction()
-opacity_trans_fun.AddPoint(0,0.)
-opacity_trans_fun.AddPoint(256,.01)
+opacity_trans_fun = vtk.vtkPiecewiseFunction()
+opacity_trans_fun.AddPoint(0, 0.0)        # background
+opacity_trans_fun.AddPoint(500, 0.05)    # gray matter
+opacity_trans_fun.AddPoint(1500, 0.2)    # white matter
+opacity_trans_fun.AddPoint(3000, 0.35)   # bright regions
+opacity_trans_fun.AddPoint(4644, 0.5)    # max intensity
+
 
 # 6 set up the volume properties with linear interpolation 
 vol_property = vtk.vtkVolumeProperty()
