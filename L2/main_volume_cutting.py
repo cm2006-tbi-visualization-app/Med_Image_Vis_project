@@ -64,6 +64,7 @@ color_trans_fun.AddRGBPoint(p30, 0.8, 0.4, 0.3)    # Pinkish (Gray Matter)
 color_trans_fun.AddRGBPoint(p70, 1.0, 0.9, 0.8)    # Off-white (White Matter)
 color_trans_fun.AddRGBPoint(d_max, 0.9, 0.9, 1.0)  # Cool white (Highlights)
 
+
 # --- 5. Dynamic Opacity Transfer Function ---
 opacity_trans_fun = vtk.vtkPiecewiseFunction()
 

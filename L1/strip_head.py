@@ -12,7 +12,7 @@ if not MRI_files:
 else:
     for f in MRI_files:
         input_file_name = f
-        output_file_name = input_file_name.replace(".nii*", "_brain.nii.gz")
+        output_file_name = input_file_name.replace(".nii*", "_brain2.nii.gz")
         print(f"Stripping: {input_file_name}")
         try:
             cmd = f"hd-bet -i {input_file_name} -o {output_file_name} -device cpu"
