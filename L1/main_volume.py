@@ -40,13 +40,13 @@ opacity_trans_fun.AddPoint(0, 0.0)        # background
 opacity_trans_fun.AddPoint(500, 0.05)    # gray matter
 opacity_trans_fun.AddPoint(1500, 0.2)    # white matter
 opacity_trans_fun.AddPoint(3000, 0.35)   # bright regions
-opacity_trans_fun.AddPoint(4644, 0.5)    # max intensity
+opacity_trans_fun.AddPoint(256, 0.01)    # max intensity
 
 
 # 6 set up the volume properties with linear interpolation 
 vol_property = vtk.vtkVolumeProperty()
 vol_property.SetColor(color_trans_fun)
-vol_property.SetScalarOpacity(opacity_trans_fun)
+#vol_property.SetScalarOpacity(opacity_trans_fun)
 #vol_property.ShadeOn()
 vol_property.SetInterpolationTypeToLinear()
 vol_property.SetDiffuse(0.7)
